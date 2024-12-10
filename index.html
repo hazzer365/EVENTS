@@ -58,10 +58,12 @@
                     </li>
                     <li class="mover-item">
                       <a href="https://wa.me/+526621873008" target="_blank" class="btn-whatsapp" id="whatsapp"
-                            onclick="ga('send', 'event', 'Contacto', 'clic', 'WhatsApp Pontifex');">
+                            onclick="gtag('event', 'clic', { 
+                               'event_category': 'Contacto', 
+                               'event_label': 'WhatsApp Pontifex' 
+                            });">
                             <img src="Imagenes/watsap.png" alt="WhatsApp">
-                      </a>
-
+                       </a>
                     </li>
                 </ul>
             </nav>
