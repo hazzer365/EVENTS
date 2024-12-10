@@ -1,68 +1,48 @@
-document.getElementById('enviarButton').addEventListener('click', function() {
-  gtag('event', 'submit', {
-    'event_category': 'Formulario',
-    'event_action': 'Enviar',
-    'event_label': 'Botón ENVIAR'
-  });
-});
-document.addEventListener("DOMContentLoaded", function () {
-    const whatsappLink = document.getElementById("whatsapp");
-
-    // Verificar si el enlace existe antes de agregar el evento
-    if (whatsappLink) {
-        whatsappLink.addEventListener("click", function (event) {
-            // Enviar evento a Google Analytics
-            if (typeof gtag !== "undefined") {
-                gtag("event", "click", {
-                    event_category: "Contacto",
-                    event_label: "Click en WhatsApp",
-                    transport_type: "beacon"
-                });
-            }
-
-            // Asegurarse de que el enlace se abra correctamente en otra pestaña
-            window.open(whatsappLink.href, "_blank");
+// Verifica si la función gtag está disponible
+function enviarEventoGA4(evento, categoria, etiqueta) {
+    if (typeof gtag === "function") {
+        gtag('event', evento, {
+            'event_category': categoria,
+            'event_label': etiqueta
         });
+        console.log(`Evento enviado: ${evento}, Categoría: ${categoria}, Etiqueta: ${etiqueta}`);
+    } else {
+        console.error("gtag no está definido. Asegúrate de que Google Analytics 4 esté correctamente configurado.");
+    }
+}
+
+// Evento para clic en el correo
+function clicCorreo() {
+    enviarEventoGA4('clic', 'Contacto', 'Correo Pontifex');
+}
+
+// Evento para clic en WhatsApp
+function clicWhatsApp() {
+    enviarEventoGA4('clic', 'Contacto', 'WhatsApp Pontifex');
+}
+
+// Evento para envío de formulario
+function envioFormulario() {
+    enviarEventoGA4('Enviar', 'Formulario', 'Botón Enviar');
+}
+
+// Asignar eventos a elementos del DOM
+document.addEventListener("DOMContentLoaded", () => {
+    // Correo
+    const enlaceCorreo = document.getElementById("email");
+    if (enlaceCorreo) {
+        enlaceCorreo.addEventListener("click", clicCorreo);
+    }
+
+    // WhatsApp
+    const enlaceWhatsApp = document.getElementById("whatsapp");
+    if (enlaceWhatsApp) {
+        enlaceWhatsApp.addEventListener("click", clicWhatsApp);
+    }
+
+    // Botón Enviar
+    const botonEnviar = document.getElementById("enviarButton");
+    if (botonEnviar) {
+        botonEnviar.addEventListener("click", envioFormulario);
     }
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-    const googleMapsLink = document.getElementById("google-maps");
-
-    // Verificar si el enlace existe antes de agregar el evento
-    if (googleMapsLink) {
-        googleMapsLink.addEventListener("click", function (event) {
-            // Enviar evento a Google Analytics
-            if (typeof gtag !== "undefined") {
-                gtag("event", "click", {
-                    event_category: "Ubicación",
-                    event_label: "Click en Google Maps",
-                    transport_type: "beacon"
-                });
-            }
-
-            // Asegurarse de que el enlace se abra correctamente en otra pestaña
-            window.open(googleMapsLink.href, "_blank");
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Seleccionar el enlace de correo
-    const emailLink = document.getElementById("correo");
-
-    // Verificar si el enlace existe antes de agregar el evento
-    if (emailLink) {
-        emailLink.addEventListener("click", function (event) {
-            // Enviar evento a Google Analytics
-            if (typeof gtag !== "undefined") {
-                gtag("event", "click", {
-                    event_category: "Contacto",
-                    event_label: "Click en Correo",
-                    event_action: "Email"
-                });
-            }
-        });
-    }
-});
-
